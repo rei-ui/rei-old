@@ -36,8 +36,8 @@ export interface Selectable {
   readonly wrapEnd: boolean;
 
   /** Whether the selectable area responds to the back command. */
-  readonly canMoveBack: boolean; 
-  
+  readonly canMoveBack: boolean;
+
   /**
    * Enters the selectable area.
    */
@@ -70,7 +70,7 @@ export interface Selectable {
 
 /**
  * Determines if the object is an instance of Selectable.
- * 
+ *
  * @param object The object to check.
  */
 export function isSelectable(object: any): object is Selectable {

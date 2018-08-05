@@ -11,7 +11,7 @@ export const selectionEvent = 'selection-changed';
 
 /**
  * Fires a selection changed event on the element.
- * 
+ *
  * @param element The element that was selected.
  */
 export function fireSelectionEvent(element: Element): void {
