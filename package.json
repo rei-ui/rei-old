@@ -1,0 +1,25 @@
+{
+  "name": "@rei-ui/rei",
+  "version": "0.1.0",
+  "description": "Framework for creating 10 foot UIs",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rei-ui/rei.git"
+  },
+  "author": "Don Olmstead",
+  "license": "BSD-2-Clause",
+  "bugs": {
+    "url": "https://github.com/rei-ui/rei/issues"
+  },
+  "homepage": "https://github.com/rei-ui/rei#readme",
+  "dependencies": {
+    "@polymer/polymer": "^3.0.5"
+  }
+}
