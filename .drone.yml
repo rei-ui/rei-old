@@ -1,0 +1,8 @@
+pipeline:
+  dependencies:
+    image: node:10
+    pull: true
+    commands:
+      - node --version
+      - npm --version
+      - npm install
