@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+
+    <title>LinearSelectable tests</title>
+
+    <script src="../node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
+    <script src="../node_modules/wct-browser-legacy/browser.js"></script>
+
+    <script type="module">
+      import { LitElement, html } from '../node_modules/@polymer/lit-element';
+      import { LinearSelectableMixin } from '../lib/selectable/linear-selectable.js';
+
+      export class LinearSelectableTest extends LinearSelectableMixin(LitElement) {
+        get selectedElement() {
+          return this.__selectedElement;
+        }
+        _render() {
+          return html`<slot></slot>`;
+        }
+      }
+
+      customElements.define('linear-selectable-test', LinearSelectableTest);
+    </script>
+  </head>
+  <body>
+
+    <test-fixture id="SelectionTest">
+      <template>
+        <linear-selectable-test>
+          <div id="one"></div>
+          <div id="two"></div>
+          <div id="three"></div>
+        </linear-selectable-test>>
+      </template>
+    </test-fixture>
+
+    <script type="module">
+      import { Direction } from '../lib/selectable/linear-selectable.js';
+
+      suite('LinearSelectable', () => {
+        test('default values set', () => {
+          const element = document.createElement('linear-selectable-test');
+          assert.isFalse(element.wrapStart);
+          assert.isFalse(element.wrapEnd);
+          assert.isFalse(element.canMoveBack);
+          assert.equal(element.direction, Direction.Horizontal);
+        });
+
+        test('horizontal traversal', () => {
+          const element = fixture('SelectionTest');
+          assert.equal(element.direction, Direction.Horizontal);
+
+          assert.equal(element.selectedElement, undefined);
+          element.select();
+          assert.equal(element.selectedElement.id, 'one');
+          element.left();
+          assert.equal(element.selectedElement.id, 'one');
+          element.right();
+          assert.equal(element.selectedElement.id, 'two');
+          element.right();
+          assert.equal(element.selectedElement.id, 'three');
+          element.right();
+          assert.equal(element.selectedElement.id, 'three');
+
+          element.up();
+          assert.equal(element.selectedElement.id, 'three');
+          element.down();
+          assert.equal(element.selectedElement.id, 'three');
+        });
+
+        test('vertical traversal', () => {
+          const element = fixture('SelectionTest');
+          element.direction = Direction.Vertical;
+
+          assert.equal(element.selectedElement, undefined);
+          element.select();
+          assert.equal(element.selectedElement.id, 'one');
+          element.up();
+          assert.equal(element.selectedElement.id, 'one');
+          element.down();
+          assert.equal(element.selectedElement.id, 'two');
+          element.down();
+          assert.equal(element.selectedElement.id, 'three');
+          element.down();
+          assert.equal(element.selectedElement.id, 'three');
+
+          element.left();
+          assert.equal(element.selectedElement.id, 'three');
+          element.right();
+          assert.equal(element.selectedElement.id, 'three');
+        });
+      });
+    </script>
+  </body>
+</html>
