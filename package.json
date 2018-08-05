@@ -7,7 +7,9 @@
     "lib": "lib"
   },
   "scripts": {
-    "lint": "tslint --project ./"
+    "build": "tsc",
+    "lint": "tslint --project ./",
+    "test": "polymer test"
   },
   "repository": {
     "type": "git",
@@ -20,7 +22,8 @@
   },
   "homepage": "https://github.com/rei-ui/rei#readme",
   "dependencies": {
-    "@polymer/polymer": "^3.0.5"
+    "@polymer/polymer": "^3.0.5",
+    "polymer-cli": "^1.7.7"
   },
   "devDependencies": {
     "@polymer/lit-element": "^0.5.2",
