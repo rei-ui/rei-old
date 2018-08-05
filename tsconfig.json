@@ -6,15 +6,20 @@
     "lib": ["es2017", "esnext.asynciterable", "dom"],
     "declaration": true,
     "sourceMap": true,
-    "inlineSources": false,
+    "inlineSources": true,
+    "outDir": "./lib",
+    "rootDir": "./src/lib",
+
     "strict": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "noImplicitThis": true,
+    "alwaysStrict": true,
+
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noImplicitReturns": true,
-    "noFallthroughCasesInSwitch": true,
-    "skipLibCheck": true,
-    "outDir": "./lib",
-    "rootDir": "./src/lib"
+    "noFallthroughCasesInSwitch": true
   },
   "include": [
     "src/**/*.ts"
