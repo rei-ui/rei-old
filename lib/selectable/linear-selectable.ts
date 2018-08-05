@@ -51,14 +51,14 @@ const linearSelectable = (base: HTMLElementConstructor) => {
       this.wrapStart = false;
       this.wrapEnd = false;
       this.canMoveBack = false;
-      
+
       this.direction = Direction.Horizontal;
     }
 
     // Selectable methods
 
     select(element?: Element): void {
-      var selected = this._selectInternal(element);
+      let selected = this._selectInternal(element);
 
       // If there was no preference from onSelect then just get the first
       // selectable element from the container
@@ -70,35 +70,35 @@ const linearSelectable = (base: HTMLElementConstructor) => {
     }
 
     left(): void {
-      var selected = (this.direction == Direction.Horizontal) ? this.__previous() : false;
-    
+      const selected = (this.direction === Direction.Horizontal) ? this.__previous() : false;
+
       if ((!selected) && (isSelectable(this.parentElement))) {
         this.parentElement.left();
       }
     }
-    
+
     right(): void {
-      let selected = (this.direction == Direction.Horizontal) ? this.__next() : false;
-    
+      const selected = (this.direction === Direction.Horizontal) ? this.__next() : false;
+
       if ((!selected) && (isSelectable(this.parentElement))) {
         this.parentElement.right();
       }
     }
-    
+
     up(): void {
-      let selected = (this.direction == Direction.Vertical) ? this.__previous() : false;
-    
+      const selected = (this.direction === Direction.Vertical) ? this.__previous() : false;
+
       if ((!selected) && (isSelectable(this.parentElement))) {
         this.parentElement.up();
       }
     }
-    
+
     down(): void {
-      let selected = (this.direction == Direction.Vertical) ? this.__next() : false;
-    
+      const selected = (this.direction === Direction.Vertical) ? this.__next() : false;
+
       if ((!selected) && (isSelectable(this.parentElement))) {
         this.parentElement.down();
-      }    
+      }
     }
 
     back(): void {
@@ -108,10 +108,10 @@ const linearSelectable = (base: HTMLElementConstructor) => {
         this.parentElement.back();
       }
     }
-    
+
     resetSelection(): void {
       this.__selectedElement = undefined;
-    }    
+    }
 
     // LinearSelectable methods
 
@@ -122,7 +122,7 @@ const linearSelectable = (base: HTMLElementConstructor) => {
     // Private methods
 
     __previous(): boolean {
-      var previous = this.__getSelectedElement().previousElementSibling;
+      let previous = this.__getSelectedElement().previousElementSibling;
 
       while ((previous !== null) && (!canSelectElement(previous))) {
         previous = previous.previousElementSibling;
@@ -132,7 +132,7 @@ const linearSelectable = (base: HTMLElementConstructor) => {
     }
 
     __next(): boolean {
-      var next = this.__getSelectedElement().nextElementSibling;
+      let next = this.__getSelectedElement().nextElementSibling;
 
       while ((next !== null) && (!canSelectElement(next))) {
         next = next.nextElementSibling;
@@ -142,7 +142,7 @@ const linearSelectable = (base: HTMLElementConstructor) => {
     }
 
     __selectElement(element: Element): boolean {
-      let previous = this.__selectedElement;
+      const previous = this.__selectedElement;
       this.__selectedElement = element;
 
       if (isSelectable(element)) {
@@ -156,8 +156,8 @@ const linearSelectable = (base: HTMLElementConstructor) => {
 
     __getSelectedElement(): Element {
       return this.__selectedElement !== undefined ? this.__selectedElement : this.children.item(0);
-    }    
-  }
-}
+    }
+  };
+};
 
 export const LinearSelectableMixin = dedupingMixin(linearSelectable);
