@@ -5,17 +5,19 @@
     "moduleResolution": "node",
     "lib": ["es2017", "esnext.asynciterable", "dom"],
     "declaration": true,
-    "sourceMap": false,
+    "sourceMap": true,
     "inlineSources": false,
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "outDir": "./lib",
+    "rootDir": "./src/lib"
   },
   "include": [
-    "lib/**/*.ts"
+    "src/**/*.ts"
   ],
   "exclude": []
 }
