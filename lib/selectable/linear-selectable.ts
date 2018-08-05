@@ -62,7 +62,7 @@ const linearSelectable = (base: HTMLElementConstructor) => {
 
       // If there was no preference from onSelect then just get the first
       // selectable element from the container
-      if (!selected) {
+      if (selected === undefined) {
         selected = this.__getSelectedElement();
       }
 
@@ -115,8 +115,8 @@ const linearSelectable = (base: HTMLElementConstructor) => {
 
     // LinearSelectable methods
 
-    _selectInternal(element?: Element): Element | undefined {
-      return element;
+    _selectInternal(_?: Element): Element | undefined {
+      return undefined;
     }
 
     // Private methods
