@@ -17,7 +17,7 @@ export interface Selectable {
   /**
    * The currently selected element.
    */
-  readonly selectedElement?: Element;
+  readonly selectedElement: Element | null;
 
   /**
    * Whether the selectable area allows wrapping from the first element.

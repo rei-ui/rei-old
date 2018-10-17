@@ -36,14 +36,13 @@ export interface HTMLElementConstructor {
 
 const linearSelectable = (base: HTMLElementConstructor) => {
   return class extends base implements HTMLElement, Selectable, LinearSelectable {
-    selectedElement?: Element;
     wrapStart: boolean;
     wrapEnd: boolean;
     canMoveBack: boolean;
 
     direction: Direction;
 
-    __selectedElement?: Element;
+    __selectedElement: Element | null;
 
     constructor() {
       super();
@@ -53,6 +52,12 @@ const linearSelectable = (base: HTMLElementConstructor) => {
       this.canMoveBack = false;
 
       this.direction = Direction.Horizontal;
+
+      this.__selectedElement = null;
+    }
+
+    get selectedElement(): Element | null {
+      return this.__selectedElement;
     }
 
     // Selectable methods
@@ -62,8 +67,12 @@ const linearSelectable = (base: HTMLElementConstructor) => {
 
       // If there was no preference from onSelect then just get the first
       // selectable element from the container
-      if (selected === undefined) {
+      if (selected === null) {
         selected = this.__getSelectedElement();
+
+        if (selected === null) {
+          return;
+        }
       }
 
       this.__selectElement(selected);
@@ -110,19 +119,25 @@ const linearSelectable = (base: HTMLElementConstructor) => {
     }
 
     resetSelection(): void {
-      this.__selectedElement = undefined;
+      this.__selectedElement = null;
     }
 
     // LinearSelectable methods
 
-    _selectInternal(_?: Element): Element | undefined {
-      return undefined;
+    _selectInternal(_?: Element): Element | null {
+      return null;
     }
 
     // Private methods
 
     __previous(): boolean {
-      let previous = this.__getSelectedElement().previousElementSibling;
+      const current = this.__getSelectedElement();
+
+      if (current == null) {
+        return false;
+      }
+
+      let previous = current.previousElementSibling;
 
       while ((previous !== null) && (!canSelectElement(previous))) {
         previous = previous.previousElementSibling;
@@ -132,7 +147,13 @@ const linearSelectable = (base: HTMLElementConstructor) => {
     }
 
     __next(): boolean {
-      let next = this.__getSelectedElement().nextElementSibling;
+      const current = this.__getSelectedElement();
+
+      if (current == null) {
+        return false;
+      }
+
+      let next = current.nextElementSibling;
 
       while ((next !== null) && (!canSelectElement(next))) {
         next = next.nextElementSibling;
@@ -146,7 +167,7 @@ const linearSelectable = (base: HTMLElementConstructor) => {
       this.__selectedElement = element;
 
       if (isSelectable(element)) {
-        element.select(previous);
+        element.select((previous !== null) ? previous : undefined);
       } else {
         fireSelectionEvent(element);
       }
@@ -154,8 +175,14 @@ const linearSelectable = (base: HTMLElementConstructor) => {
       return true;
     }
 
-    __getSelectedElement(): Element {
-      return this.__selectedElement !== undefined ? this.__selectedElement : this.children.item(0);
+    __getSelectedElement(): Element | null {
+      const current = this.__selectedElement;
+
+      if (current !== null) {
+        return current;
+      }
+
+      return this.children.item(0);
     }
   };
 };
