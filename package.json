@@ -7,10 +7,14 @@
     "lib": "lib"
   },
   "scripts": {
-    "build": "tsc",
+    "start": "polymer serve",
+    "build": "npm run build:ts",
+    "build:ts": "tsc",
     "docs": "typedoc --mode modules --out ./docs",
-    "lint": "tslint --project ./",
-    "test": "polymer test"
+    "lint": "npm run lint:ts && npm run build:ts && npm run lint:polymer",
+    "lint:ts": "tslint --project ./",
+    "lint:polymer": "polymer lint",
+    "test": "npm run build:ts && polymer test"
   },
   "repository": {
     "type": "git",
